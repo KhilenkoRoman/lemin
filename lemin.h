@@ -27,6 +27,17 @@ typedef struct		s_input
 	struct s_input	*next;
 }					t_input;
 
+typedef struct		s_room
+{
+	char			*name;
+	int 			start;
+	int 			end;
+	int 			x;
+	int 			y;
+	struct s_room	*next;
+	struct s_room	*links;
+}					t_room;
+
 typedef struct	s_storage
 {
 	int				argc;
@@ -35,8 +46,11 @@ typedef struct	s_storage
 	int 			step_1;
 	int 			step_2;
 	int 			step_3;
+	int 			nr_start;
+	int 			nr_end;
 	int 			ant_nbr;
-	t_input         *raw_input_lst;
+	t_input			*raw_input_lst;
+	t_room			*rooms_lst;
 }				t_storage;
 
 void reader(t_storage *s);
@@ -45,5 +59,9 @@ void print_input_list(t_storage *s);
 void get_room(t_storage *s, char *line);
 int arrlen(char **array);
 int isnumeric(char *str);
+void add_room_lst(t_storage *s, char *name, int x, int y);
+void print_room_list(t_storage *s);
+void free_array(char **array);
+void get_links(t_storage *s, char *line);
 
 #endif

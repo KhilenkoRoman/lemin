@@ -56,13 +56,15 @@ static void parser(t_storage *s)
 			get_ants(s, line);
 		else if (!s->step_2)
 			get_room(s, line);
-		// else if (!s->step_3)
-		// 	get_link(s, line);
+		else if (!s->step_3)
+			get_links(s, line);
 		// printf("-->%d\n", line[0]);
 		free(line);
 	}
 	printf("--\n");
 	print_input_list(s);
+	printf("--\n");
+	print_room_list(s);
 	printf("--\n");
 
 }

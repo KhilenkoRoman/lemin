@@ -18,6 +18,8 @@ void init(t_storage *s)
 	s->step_1 = 0;
 	s->step_2 = 0;
 	s->step_3 = 0;
+	s->nr_start = 0;
+	s->nr_end = 0;
 }
 
 int main(int argc, char *argv[])

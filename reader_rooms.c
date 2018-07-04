@@ -12,24 +12,58 @@
 
 #include "lemin.h"
 
-int room_validator(char *line)
+static void check_room_coords(t_storage *s, char *name, int x, int y)
+{
+	t_room *tmp;
+
+	if (s->rooms_lst == NULL)
+		return;
+	else
+	{
+		tmp = s->rooms_lst;
+		while(tmp != NULL)
+		{
+			if (tmp->x == x && tmp->y == y)
+			{
+				ft_putstr("wrong room coordinates\n");
+				exit(0);
+			}
+			if (!ft_strcmp(tmp->name, name))
+			{
+				ft_putstr("wrong room name\n");
+				exit(0);
+			}
+			tmp = tmp->next;
+		}
+	}
+}
+
+int add_room(t_storage *s, char *line)
 {
 	char **array;
 
+	if (ft_strchr(line, '-'))
+	{
+		get_links(s, line);
+		s->step_2 = 1;
+		return(1);
+	}
 	array = ft_strsplit(line, ' ');
-	if (arrlen(array) != 3)
+	if (arrlen(array) != 3 || !isnumeric(array[1]) || !isnumeric(array[2]))
 	{
 		ft_putstr("wrong room\n");
 		exit(0);
 	}
-
-	// to fo free list 
-
+	check_room_coords(s, array[0], ft_atoi(array[1]), ft_atoi(array[2]));
+	add_room_lst(s, ft_strdup(array[0]), ft_atoi(array[1]), ft_atoi(array[2]));
+	s->nr_start = 0;
+	s->nr_end = 0;
+	add_input_lst(s, ft_strdup(line));
+	free_array(array);
 	return(1);
 }
 
 void get_room(t_storage *s, char *line)
 {
-	room_validator(line);
-	s->argc = s->argc + 1 - 1;
+	add_room(s, line);
 }
