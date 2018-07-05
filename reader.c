@@ -61,11 +61,11 @@ static void parser(t_storage *s)
 		// printf("-->%d\n", line[0]);
 		free(line);
 	}
-	printf("--\n");
+	printf("\n\n-- raw_input --\n\n");
 	print_input_list(s);
-	printf("--\n");
+	printf("\n\n-- print rooms --\n\n");
 	print_room_list(s);
-	printf("--\n");
+	printf("\n\n--------\n\n");
 
 }
 

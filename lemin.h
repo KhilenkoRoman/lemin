@@ -27,6 +27,12 @@ typedef struct		s_input
 	struct s_input	*next;
 }					t_input;
 
+typedef struct		s_link
+{
+	char			*name;
+	struct s_link	*next;
+}					t_link;
+
 typedef struct		s_room
 {
 	char			*name;
@@ -35,7 +41,7 @@ typedef struct		s_room
 	int 			x;
 	int 			y;
 	struct s_room	*next;
-	struct s_room	*links;
+	struct s_link	*links;
 }					t_room;
 
 typedef struct	s_storage
@@ -53,15 +59,16 @@ typedef struct	s_storage
 	t_room			*rooms_lst;
 }				t_storage;
 
-void reader(t_storage *s);
-void add_input_lst(t_storage *s, char *line);
-void print_input_list(t_storage *s);
-void get_room(t_storage *s, char *line);
-int arrlen(char **array);
-int isnumeric(char *str);
-void add_room_lst(t_storage *s, char *name, int x, int y);
-void print_room_list(t_storage *s);
-void free_array(char **array);
-void get_links(t_storage *s, char *line);
+void		reader(t_storage *s);
+void		add_input_lst(t_storage *s, char *line);
+void		print_input_list(t_storage *s);
+void		get_room(t_storage *s, char *line);
+int			arrlen(char **array);
+int			isnumeric(char *str);
+void		add_room_lst(t_storage *s, char *name, int x, int y);
+void		print_room_list(t_storage *s);
+void		free_array(char **array);
+void		get_links(t_storage *s, char *line);
+t_room		*find_room(t_storage *s, char *name);
 
 #endif

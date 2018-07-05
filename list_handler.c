@@ -12,6 +12,20 @@
 
 #include "lemin.h"
 
+t_room *find_room(t_storage *s, char *name)
+{
+	t_room *tmp;
+
+	tmp = s->rooms_lst;
+	while(tmp != NULL)
+	{
+		if(!ft_strcmp(tmp->name, name))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return(tmp);
+}
+
 void add_room_lst(t_storage *s, char *name, int x, int y)
 {
 	t_room *tmp;
@@ -72,12 +86,20 @@ void print_input_list(t_storage *s)
 void print_room_list(t_storage *s)
 {
 	t_room *tmp;
+	t_link *link;
 
 	tmp = s->rooms_lst;
 	while(tmp != NULL)
 	{
-		printf("--rooms-->%s", tmp->name);
-		printf("--x_%d-y_%d-start_%d-end_%d\n", tmp->x, tmp->y, tmp->start, tmp->end);
+		printf("room-->%s", tmp->name);
+		printf("x_%d-y_%d-start_%d-end_%d\n", tmp->x, tmp->y, tmp->start, tmp->end);
+		link = tmp->links;
+		while (link != NULL)
+		{
+			printf("__link_name-->%s\n", link->name);
+			link = link->next;
+		}
+		printf("\n");
 		tmp = tmp->next;
 	}
 }
