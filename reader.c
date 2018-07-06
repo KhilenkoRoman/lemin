@@ -78,8 +78,13 @@ static void parser(t_storage *s)
 {
 	char *line;
 
-	while (get_next_line(s->fd, &line) && line[0] != 0)
+	while (get_next_line(s->fd, &line))
 	{
+		if (line[0] == 0)
+		{
+			free(line);
+			break;
+		}
 		if (get_comment(s, line));
 		else if (!s->step_1)
 			get_ants(s, line);

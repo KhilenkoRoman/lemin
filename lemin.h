@@ -58,6 +58,8 @@ typedef struct	s_storage
 	int 			is_start;
 	int 			is_end;
 	int 			ant_nbr;
+	int 			ant_start;
+	int 			ant_reach;
 	int 			dt;
 	int 			room_nbr;
 	int 			gc;
@@ -84,5 +86,6 @@ void		print_link_list(t_link *list);
 void		room_count(t_storage *s);
 int			link_count(t_link *list);
 void		pop_last_link(t_link **list);
+void		printer(t_storage *s);
 
 #endif

@@ -31,6 +31,8 @@ void init(t_storage *s)
 	s->is_start = 0;
 	s->is_end = 0;
 	s->dt = 1;
+	s->ant_reach = 0;
+	s->ant_start = 0;
 }
 
 int main(int argc, char *argv[])
@@ -43,5 +45,6 @@ int main(int argc, char *argv[])
 	init(&s);
 	reader(&s);
 	way_finder(&s);
+	printer(&s);
 	// system("leaks lem-in");
 }

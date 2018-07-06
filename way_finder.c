@@ -104,7 +104,6 @@ static void finder(t_storage *s)
 	s->gc = 1;
 	while (s->gc <= s->room_nbr)
 	{
-		printf("gc = %d\n", s->gc);
 		res = step(s->rooms_lst, s, 1);
 		if (res == 1)
 			break;
@@ -113,18 +112,8 @@ static void finder(t_storage *s)
 		s->way = NULL;
 		s->gc++;		
 	}
-	
-	printf("---> way found %d <----\n", res);
-	// print_link_list(s->way);
-
-	// add_link_lst(&s->way, "11");
-	// add_link_lst(&s->way, "22");
-	// add_link_lst(&s->way, "33");
-	// add_link_lst(&s->way, "44");
-	// pop_last_link(&s->way);
-	printf("----\n");
-	print_link_list(s->way);
-	printf("----\n");
+	if (res == 0)
+		error("no way out");
 }
 
 void way_finder(t_storage *s)
