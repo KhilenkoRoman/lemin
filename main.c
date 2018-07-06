@@ -30,6 +30,7 @@ void init(t_storage *s)
 	s->nr_end = 0;
 	s->is_start = 0;
 	s->is_end = 0;
+	s->dt = 1;
 }
 
 int main(int argc, char *argv[])

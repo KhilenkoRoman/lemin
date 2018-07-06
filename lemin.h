@@ -58,6 +58,9 @@ typedef struct	s_storage
 	int 			is_start;
 	int 			is_end;
 	int 			ant_nbr;
+	int 			dt;
+	int 			room_nbr;
+	int 			gc;
 	t_input			*raw_input_lst;
 	t_room			*rooms_lst;
 	t_link			*way;
@@ -76,5 +79,10 @@ void		get_links(t_storage *s, char *line);
 t_room		*find_room(t_storage *s, char *name);
 void		error(char *error);
 void		way_finder(t_storage *s);
+void		add_link_lst(t_link **list, char *name);
+void		print_link_list(t_link *list);
+void		room_count(t_storage *s);
+int			link_count(t_link *list);
+void		pop_last_link(t_link **list);
 
 #endif

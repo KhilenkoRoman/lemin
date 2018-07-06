@@ -61,9 +61,76 @@ static void ender(t_storage *s)
 	tmp->next = end;
 }
 
+static void unvisit(t_storage *s)
+{
+	t_room	*tmp;
+
+	tmp = s->rooms_lst;
+	while (tmp != NULL)
+	{
+		tmp->visited = 0;
+		tmp = tmp->next;
+	}
+}
+
+static int step(t_room *room, t_storage *s, int count)
+{
+	t_link *links;
+
+	if (room->end == 1)
+	{
+		add_link_lst(&s->way, room->name);
+		return (1);
+	}
+	if (room->visited == 1 || count > s->gc)
+		return (0);
+	add_link_lst(&s->way, room->name);
+	links = room->links;
+	room->visited = 1;
+	while (links != NULL)
+	{
+		if (step(find_room(s, links->name), s, count + 1) == 1)
+			return (1);
+		links = links->next;
+	}
+	pop_last_link(&s->way);
+	return(0);
+}
+
+static void finder(t_storage *s)
+{
+	int res;
+
+	s->gc = 1;
+	while (s->gc <= s->room_nbr)
+	{
+		printf("gc = %d\n", s->gc);
+		res = step(s->rooms_lst, s, 1);
+		if (res == 1)
+			break;
+		unvisit(s);
+		free(s->way);
+		s->way = NULL;
+		s->gc++;		
+	}
+	
+	printf("---> way found %d <----\n", res);
+	// print_link_list(s->way);
+
+	// add_link_lst(&s->way, "11");
+	// add_link_lst(&s->way, "22");
+	// add_link_lst(&s->way, "33");
+	// add_link_lst(&s->way, "44");
+	// pop_last_link(&s->way);
+	printf("----\n");
+	print_link_list(s->way);
+	printf("----\n");
+}
+
 void way_finder(t_storage *s)
 {
 	starter(s);
 	ender(s);
-	print_room_list(s);
+	room_count(s);
+	finder(s);
 }

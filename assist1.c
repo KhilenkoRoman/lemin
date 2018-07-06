@@ -47,3 +47,30 @@ void free_array(char **array)
 		free(array[i++]);
 	free(array);
 }
+
+void room_count(t_storage *s)
+{
+	t_room *tmp;
+	s->room_nbr = 0;
+	tmp = s->rooms_lst;
+	while (tmp != NULL)
+	{
+		s->room_nbr++;
+		tmp = tmp->next;
+	}
+}
+
+int link_count(t_link *list)
+{
+	t_link	*tmp;
+	int		i;
+
+	tmp = list;
+	i = 0;
+	while (tmp != NULL)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return(i);
+}
