@@ -12,12 +12,6 @@
 
 #include "lemin.h"
 
-static void	link_add2(t_link **alst, t_link *new)
-{
-	new->next = *alst;
-	*alst = new;
-}
-
 static t_link *link_create(char *name)
 {
 	t_link *new_link;
@@ -39,7 +33,8 @@ static void	link_add(t_storage *s, char *to, char *link)
 		if(!ft_strcmp(tmp->name, to))
 		{
 			ltmp = link_create(link);
-			link_add2(&tmp->links, ltmp);
+			ltmp->next = tmp->links;
+			tmp->links = ltmp;
 			return;
 		}
 		tmp = tmp->next;

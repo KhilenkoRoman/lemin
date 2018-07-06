@@ -40,6 +40,7 @@ typedef struct		s_room
 	int 			end;
 	int 			x;
 	int 			y;
+	int 			visited;
 	struct s_room	*next;
 	struct s_link	*links;
 }					t_room;
@@ -54,9 +55,12 @@ typedef struct	s_storage
 	int 			step_3;
 	int 			nr_start;
 	int 			nr_end;
+	int 			is_start;
+	int 			is_end;
 	int 			ant_nbr;
 	t_input			*raw_input_lst;
 	t_room			*rooms_lst;
+	t_link			*way;
 }				t_storage;
 
 void		reader(t_storage *s);
@@ -70,5 +74,7 @@ void		print_room_list(t_storage *s);
 void		free_array(char **array);
 void		get_links(t_storage *s, char *line);
 t_room		*find_room(t_storage *s, char *name);
+void		error(char *error);
+void		way_finder(t_storage *s);
 
 #endif

@@ -39,6 +39,7 @@ void add_room_lst(t_storage *s, char *name, int x, int y)
 	new->end = s->nr_end;
 	new->x = x;
 	new->y = y;
+	new->visited = 0;
 	if (s->rooms_lst == NULL)
 		s->rooms_lst = new;
 	else
@@ -78,7 +79,8 @@ void print_input_list(t_storage *s)
 	tmp = s->raw_input_lst;
 	while(tmp != NULL)
 	{
-		printf(">raw_inp>%s\n", tmp->text);
+		ft_putstr(tmp->text);
+		ft_putstr("\n");
 		tmp = tmp->next;
 	}
 }
@@ -92,11 +94,11 @@ void print_room_list(t_storage *s)
 	while(tmp != NULL)
 	{
 		printf("room-->%s", tmp->name);
-		printf("x_%d-y_%d-start_%d-end_%d\n", tmp->x, tmp->y, tmp->start, tmp->end);
+		printf(" x=%d y=%d start=%d end=%d visited = %d\n", tmp->x, tmp->y, tmp->start, tmp->end, tmp->visited);
 		link = tmp->links;
 		while (link != NULL)
 		{
-			printf("__link_name-->%s\n", link->name);
+			printf("__link_name--> %s\n", link->name);
 			link = link->next;
 		}
 		printf("\n");

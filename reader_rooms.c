@@ -49,7 +49,7 @@ int add_room(t_storage *s, char *line)
 		return(1);
 	}
 	array = ft_strsplit(line, ' ');
-	if (arrlen(array) != 3 || !isnumeric(array[1]) || !isnumeric(array[2]))
+	if (arrlen(array) != 3 || !isnumeric(array[1]) || !isnumeric(array[2]) || ft_atoi(array[1]) < 0 ||  ft_atoi(array[2]) < 0)
 	{
 		ft_putstr("wrong room\n");
 		exit(0);
