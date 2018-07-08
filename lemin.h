@@ -72,6 +72,7 @@ typedef struct	s_storage
 	int 			dt;
 	int 			room_nbr;
 	int 			gc;
+	int 			shortest_len;
 	t_input			*raw_input_lst;
 	t_room			*rooms_lst;
 	t_ways			*ways_all;

@@ -39,19 +39,6 @@
 // 	return(antray);
 // }
 
-// static void ant_print(t_ways *way)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (i < way_len)
-// 	{
-// 		printf(" [%d] ", antray[i]);
-// 		i++;
-// 	}
-// 	printf("\n");
-// }
-
 char *get_room_name(t_link *way, int index)
 {
 	int		i;
@@ -66,6 +53,20 @@ char *get_room_name(t_link *way, int index)
 	}
 	return(tmp->name);
 }
+
+
+// static void ant_print(t_ways *way)
+// {
+// 	int i;
+
+// 	i = 1;
+// 	while (i < way->len)
+// 	{
+// 		printf(" [%2d] ", way->antray[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// }
 
 static void ant_print(t_ways *way)
 {
@@ -99,7 +100,7 @@ static void ant_move(t_storage *s, t_ways *way)
 				s->ant_reach++;
 			way->antray[i] = way->antray[i - 1];
 		}
-		else if(i == 0 && s->ant_start > 0 && (way->shortest == 1 || s->ant_start >= way->len - 1))
+		else if(i == 0 && s->ant_start > 0 && (way->shortest == 1 || s->ant_start >= way->len - s->shortest_len))
 		{
 			way->antray[i] = s->ant_nbr - s->ant_start + 1;
 			s->ant_start--;
@@ -116,18 +117,19 @@ void prepare_ways(t_storage *s)
 {
 	t_ways *tmp;
 	int i;
-	int len;
+	int flag;
 
-	len = -1;
+	flag = -1;
 	tmp = s->ways_all;
 	while (tmp != NULL)
 	{
 		i = 0;
 		tmp->len = link_count(tmp->way);
-		if (len == -1)
+		if (flag == -1)
 		{
 			tmp->shortest = 1;
-			len = 0;
+			s->shortest_len = tmp->len;
+			flag = 0;
 		}
 		else
 			tmp->shortest = 0;

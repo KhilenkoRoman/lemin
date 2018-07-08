@@ -24,15 +24,11 @@ static void check_room_coords(t_storage *s, char *name, int x, int y)
 		while(tmp != NULL)
 		{
 			if (tmp->x == x && tmp->y == y)
-			{
-				ft_putstr("wrong room coordinates\n");
-				exit(0);
-			}
+				error("wrong room coordinates");
 			if (!ft_strcmp(tmp->name, name))
-			{
-				ft_putstr("wrong room name\n");
-				exit(0);
-			}
+				error("wrong room name");
+			if (name[0] == 'L')
+				error("no L at start alowed");
 			tmp = tmp->next;
 		}
 	}
