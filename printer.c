@@ -52,17 +52,38 @@
 // 	printf("\n");
 // }
 
+char *get_room_name(t_link *way, int index)
+{
+	int		i;
+	t_link	*tmp;
+
+	i = 0;
+	tmp = way;
+	while (tmp != NULL && i < index)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return(tmp->name);
+}
+
 static void ant_print(t_ways *way)
 {
 	int i;
 
-	i = 0;
+	i = 1;
 	while (i < way->len)
 	{
-		printf(" [%d] ", way->antray[i]);
+		if (way->antray[i] > 0)
+		{
+			ft_putstr("L");
+			ft_putnbr(way->antray[i]);
+			ft_putstr("-");
+			ft_putstr(get_room_name(way->way, i));
+			ft_putstr(" ");
+		}
 		i++;
 	}
-	printf("\n");
 }
 
 static void ant_move(t_storage *s, t_ways *way)
@@ -78,7 +99,7 @@ static void ant_move(t_storage *s, t_ways *way)
 				s->ant_reach++;
 			way->antray[i] = way->antray[i - 1];
 		}
-		else if(i == 0 && s->ant_start > 0 && (way->shortest == 1 || s->ant_start >= way->len))
+		else if(i == 0 && s->ant_start > 0 && (way->shortest == 1 || s->ant_start >= way->len - 1))
 		{
 			way->antray[i] = s->ant_nbr - s->ant_start + 1;
 			s->ant_start--;
@@ -128,7 +149,6 @@ void printer(t_storage *s)
 	s->ant_start = s->ant_nbr;
 	while (s->ant_reach < s->ant_nbr)
 	{
-		printf("-----\n");
 		tmp = s->ways_all;
 		while (tmp != NULL && tmp->len > 0)
 		{
@@ -136,5 +156,6 @@ void printer(t_storage *s)
 			ant_print(tmp);
 			tmp = tmp->next;
 		}
+		ft_putstr("\n");
 	}
 }

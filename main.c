@@ -46,5 +46,5 @@ int main(int argc, char *argv[])
 	reader(&s);
 	way_finder(&s);
 	printer(&s);
-	system("leaks lem-in");
+	// system("leaks lem-in");
 }

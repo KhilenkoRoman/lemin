@@ -37,8 +37,8 @@ LINK_FLAGS  =   $(LIBFT_FLAGS)
 
 HEAD_FLAGS  =   -I $(INC_DIR) -I $(LIBFT_INC)
 
-# CC_FLAGS    =   -Wall -Wextra -Werror
-CC_FLAGS    =
+CC_FLAGS    =   -Wall -Wextra -Werror
+# CC_FLAGS    =
 
 CC          =   gcc
 
