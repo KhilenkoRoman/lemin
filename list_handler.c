@@ -26,6 +26,48 @@ t_room *find_room(t_storage *s, char *name)
 	return(tmp);
 }
 
+int room_in_way(char *name, t_storage *s)
+{
+	t_ways *tmp;
+	t_link *tmp_link;
+
+	tmp = s->ways_all;
+	while (tmp != NULL)
+	{
+		tmp_link = tmp->way;
+		while(tmp_link != NULL)
+		{
+			if(!ft_strcmp(tmp_link->name, name))
+				return(1);
+			tmp_link = tmp_link->next;
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+t_ways	*get_next_way(t_storage *s)
+{
+	t_ways *tmp;
+	t_ways *new;
+
+	new = (t_ways *)malloc(sizeof(*new));
+	new->way = NULL;
+	new->next = NULL;
+	if (s->ways_all == NULL)
+	{
+		s->ways_all = new;
+	}
+	else
+	{
+		tmp = s->ways_all;
+		while(tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return(new);
+}
+
 void add_room_lst(t_storage *s, char *name, int x, int y)
 {
 	t_room *tmp;

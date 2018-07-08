@@ -73,47 +73,58 @@ static void unvisit(t_storage *s)
 	}
 }
 
-static int step(t_room *room, t_storage *s, int count)
+static int step(t_room *room, t_storage *s, int count, t_link **way)
 {
 	t_link *links;
 
 	if (room->end == 1)
 	{
-		add_link_lst(&s->way, room->name);
+		add_link_lst(way, room->name);
 		return (1);
 	}
-	if (room->visited == 1 || count > s->gc)
+	if (room->visited == 1 || count > s->gc || (room_in_way(room->name, s) == 1 && room->start != 1))
 		return (0);
-	add_link_lst(&s->way, room->name);
+	add_link_lst(way, room->name);
 	links = room->links;
 	room->visited = 1;
 	while (links != NULL)
 	{
-		if (step(find_room(s, links->name), s, count + 1) == 1)
+		if (step(find_room(s, links->name), s, count + 1, way) == 1)
 			return (1);
 		links = links->next;
 	}
-	pop_last_link(&s->way);
+	pop_last_link(way);
 	return(0);
 }
 
 static void finder(t_storage *s)
 {
-	int res;
+	int		res;
+	t_ways	*cur_way;
 
-	s->gc = 1;
-	while (s->gc <= s->room_nbr)
+	res = 1;
+	while (res == 1)
 	{
-		res = step(s->rooms_lst, s, 1);
-		if (res == 1)
+		s->gc = 1;
+		cur_way = get_next_way(s);
+		while (s->gc <= s->room_nbr)
+		{
+			res = step(s->rooms_lst, s, 1, &cur_way->way);
+			if (res == 1)
+			{
+				printf("%d\n", res);
+				printf("------\n");
+				print_link_list(cur_way->way);
+				break;
+			}
+			unvisit(s);
+			free(cur_way->way);
+			cur_way->way = NULL;
+			s->gc++;		
+		}
+		if (res == 0)
 			break;
-		unvisit(s);
-		free(s->way);
-		s->way = NULL;
-		s->gc++;		
 	}
-	if (res == 0)
-		error("no way out");
 }
 
 void way_finder(t_storage *s)
@@ -122,4 +133,6 @@ void way_finder(t_storage *s)
 	ender(s);
 	room_count(s);
 	finder(s);
+	if (s->ways_all->way == NULL)
+		error("no way out");
 }

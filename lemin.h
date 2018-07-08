@@ -33,6 +33,14 @@ typedef struct		s_link
 	struct s_link	*next;
 }					t_link;
 
+typedef struct		s_ways
+{
+	int 			*ants;
+	int 			len;
+	t_link			*way;
+	struct s_ways	*next;
+}					t_ways;
+
 typedef struct		s_room
 {
 	char			*name;
@@ -65,7 +73,7 @@ typedef struct	s_storage
 	int 			gc;
 	t_input			*raw_input_lst;
 	t_room			*rooms_lst;
-	t_link			*way;
+	t_ways			*ways_all;
 }				t_storage;
 
 void		reader(t_storage *s);
@@ -87,5 +95,7 @@ void		room_count(t_storage *s);
 int			link_count(t_link *list);
 void		pop_last_link(t_link **list);
 void		printer(t_storage *s);
+t_ways		*get_next_way(t_storage *s);
+int			room_in_way(char *name, t_storage *s);
 
 #endif
