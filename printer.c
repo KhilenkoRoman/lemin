@@ -12,70 +12,129 @@
 
 #include "lemin.h"
 
-static int *ant_move(t_storage *s, int *antray, int way_len)
-{
-	int i;
+// static void ant_move(t_storage *s, t_ways *way)
+// {
+// 	int i;
 
-	i = way_len - 1;
-	while (i >= 0)
-	{
-		if (i == way_len - 1)
-		{
-			if (antray[i] != 0)
-				s->ant_reach++;
-			antray[i] = antray[i - 1];
-		}
-		else if(i == 0 && s->ant_start > 0)
-		{
-			antray[i] = s->ant_nbr - s->ant_start + 1;
-			s->ant_start--;
-		}
-		else if(i > 0 && i < way_len - 1)
-			antray[i] = antray[i - 1];
-		else if(i == 0 && s->ant_start == 0)
-			antray[i] = 0;
-		i--;
-	}
-	return(antray);
-}
+// 	i = way_len - 1;
+// 	while (i >= 0)
+// 	{
+// 		if (i == way_len - 1)
+// 		{
+// 			if (antray[i] != 0)
+// 				s->ant_reach++;
+// 			antray[i] = antray[i - 1];
+// 		}
+// 		else if(i == 0 && s->ant_start > 0)
+// 		{
+// 			antray[i] = s->ant_nbr - s->ant_start + 1;
+// 			s->ant_start--;
+// 		}
+// 		else if(i > 0 && i < way_len - 1)
+// 			antray[i] = antray[i - 1];
+// 		else if(i == 0 && s->ant_start == 0)
+// 			antray[i] = 0;
+// 		i--;
+// 	}
+// 	return(antray);
+// }
 
-static void ant_print(t_storage *s, int *antray, int way_len)
+// static void ant_print(t_ways *way)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (i < way_len)
+// 	{
+// 		printf(" [%d] ", antray[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// }
+
+static void ant_print(t_ways *way)
 {
 	int i;
 
 	i = 0;
-	while (i < way_len)
+	while (i < way->len)
 	{
-		printf(" [%d] ", antray[i]);
+		printf(" [%d] ", way->antray[i]);
 		i++;
 	}
 	printf("\n");
 }
 
-void printer(t_storage *s)
+static void ant_move(t_storage *s, t_ways *way)
 {
-	int way_len;
-	int *antray;
 	int i;
 
-	i = -1;
+	i = way->len - 1;
+	while (i >= 0)
+	{
+		if (i == way->len - 1)
+		{
+			if (way->antray[i] != 0)
+				s->ant_reach++;
+			way->antray[i] = way->antray[i - 1];
+		}
+		else if(i == 0 && s->ant_start > 0 && (way->shortest == 1 || s->ant_start >= way->len))
+		{
+			way->antray[i] = s->ant_nbr - s->ant_start + 1;
+			s->ant_start--;
+		}
+		else if(i > 0 && i < way->len - 1)
+			way->antray[i] = way->antray[i - 1];
+		else if(i == 0 && s->ant_start == 0)
+			way->antray[i] = 0;
+		i--;
+	}
+}
+
+void prepare_ways(t_storage *s)
+{
+	t_ways *tmp;
+	int i;
+	int len;
+
+	len = -1;
+	tmp = s->ways_all;
+	while (tmp != NULL)
+	{
+		i = 0;
+		tmp->len = link_count(tmp->way);
+		if (len == -1)
+		{
+			tmp->shortest = 1;
+			len = 0;
+		}
+		else
+			tmp->shortest = 0;
+		tmp->antray = (int*)malloc(sizeof(tmp->antray) * tmp->len);
+		while (i < tmp->len)
+		{
+			tmp->antray[i] = 0;
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void printer(t_storage *s)
+{
+	t_ways *tmp;
+
+	prepare_ways(s);
 	s->ant_start = s->ant_nbr;
-	way_len = link_count(s->way);
-	antray = (int*)malloc(sizeof(antray) * way_len);
-	while (i < way_len - 1)
-		antray[++i] = 0;
 	while (s->ant_reach < s->ant_nbr)
 	{
-		// printf("ant_reach %d\n", s->ant_reach);
-		// printf("ant_nbr %d\n", s->ant_nbr);
-		antray = ant_move(s, antray, way_len);
-		ant_print(s, antray, way_len);
+		printf("-----\n");
+		tmp = s->ways_all;
+		while (tmp != NULL && tmp->len > 0)
+		{
+			ant_move(s, tmp);
+			ant_print(tmp);
+			tmp = tmp->next;
+		}
 	}
-
-	// antray = ant_move(s, antray, way_len);
-
-	// ant_print(s, antray, way_len);
-	// ant_move(s, &antray, way_len);
-
-	print_link_list(s->way);
 }

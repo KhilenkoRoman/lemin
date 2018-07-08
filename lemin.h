@@ -35,8 +35,9 @@ typedef struct		s_link
 
 typedef struct		s_ways
 {
-	int 			*ants;
+	int 			*antray;
 	int 			len;
+	int 			shortest;
 	t_link			*way;
 	struct s_ways	*next;
 }					t_ways;

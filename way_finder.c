@@ -111,12 +111,7 @@ static void finder(t_storage *s)
 		{
 			res = step(s->rooms_lst, s, 1, &cur_way->way);
 			if (res == 1)
-			{
-				printf("%d\n", res);
-				printf("------\n");
-				print_link_list(cur_way->way);
 				break;
-			}
 			unvisit(s);
 			free(cur_way->way);
 			cur_way->way = NULL;
