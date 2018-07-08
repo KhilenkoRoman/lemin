@@ -12,49 +12,49 @@
 
 #include "lemin.h"
 
-static t_link *link_create(char *name)
+static t_link	*link_create(char *name)
 {
 	t_link *new_link;
 
 	new_link = (t_link *)malloc(sizeof(*new_link));
 	new_link->name = ft_strdup(name);
 	new_link->next = NULL;
-	return(new_link);
+	return (new_link);
 }
 
-static void	link_add(t_storage *s, char *to, char *link)
+static void		link_add(t_storage *s, char *to, char *link)
 {
-	t_room *tmp;
-	t_link *ltmp;
+	t_room	*tmp;
+	t_link	*ltmp;
 
 	tmp = s->rooms_lst;
 	while (tmp != NULL)
 	{
-		if(!ft_strcmp(tmp->name, to))
+		if (!ft_strcmp(tmp->name, to))
 		{
 			ltmp = link_create(link);
 			ltmp->next = tmp->links;
 			tmp->links = ltmp;
-			return;
+			return ;
 		}
 		tmp = tmp->next;
 	}
 }
 
-static void links_exist_valid(t_storage *s, char *room1, char *room2)
+static void		links_exist_valid(t_storage *s, char *room1, char *room2)
 {
-	t_room *tmp;
-	int f1;
-	int f2;
+	t_room	*tmp;
+	int		f1;
+	int		f2;
 
 	f1 = 0;
 	f2 = 0;
 	tmp = s->rooms_lst;
 	while (tmp != NULL)
 	{
-		if(!ft_strcmp(tmp->name, room1))
+		if (!ft_strcmp(tmp->name, room1))
 			f1 = 1;
-		if(!ft_strcmp(tmp->name, room2))
+		if (!ft_strcmp(tmp->name, room2))
 			f2 = 1;
 		tmp = tmp->next;
 	}
@@ -65,7 +65,7 @@ static void links_exist_valid(t_storage *s, char *room1, char *room2)
 	}
 }
 
-void get_links(t_storage *s, char *line)
+void			get_links(t_storage *s, char *line)
 {
 	char **array;
 
@@ -86,5 +86,3 @@ void get_links(t_storage *s, char *line)
 	add_input_lst(s, ft_strdup(line));
 	free_array(array);
 }
-
-

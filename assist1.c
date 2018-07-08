@@ -12,45 +12,46 @@
 
 #include "lemin.h"
 
-int arrlen(char **array)
+int		arrlen(char **array)
 {
 	int i;
 
 	i = 0;
-	while(array[i] != 0)
+	while (array[i] != 0)
 		i++;
-	return(i);
+	return (i);
 }
 
-int isnumeric(char *str)
+int		isnumeric(char *str)
 {
 	int i;
 
 	i = ft_strlen(str);
 	while (i > 0)
 	{
-		if (str[i-1] < '0' || str[i-1] > '9')
+		if (str[i - 1] < '0' || str[i - 1] > '9')
 		{
-			return(0);
+			return (0);
 		}
 		i--;
 	}
-	return(1);
+	return (1);
 }
 
-void free_array(char **array)
+void	free_array(char **array)
 {
 	int i;
 
 	i = 0;
-	while(array[i] != 0)
+	while (array[i] != 0)
 		free(array[i++]);
 	free(array);
 }
 
-void room_count(t_storage *s)
+void	room_count(t_storage *s)
 {
-	t_room *tmp;
+	t_room	*tmp;
+
 	s->room_nbr = 0;
 	tmp = s->rooms_lst;
 	while (tmp != NULL)
@@ -60,7 +61,7 @@ void room_count(t_storage *s)
 	}
 }
 
-int link_count(t_link *list)
+int		link_count(t_link *list)
 {
 	t_link	*tmp;
 	int		i;
@@ -72,5 +73,5 @@ int link_count(t_link *list)
 		i++;
 		tmp = tmp->next;
 	}
-	return(i);
+	return (i);
 }

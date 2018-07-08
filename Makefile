@@ -20,6 +20,7 @@ SRC         =   main.c \
 				reader_links.c \
 				way_finder.c \
 				printer.c \
+				list_handler2.c \
 
 OBJ         =   $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

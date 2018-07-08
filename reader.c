@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-static void starter(t_storage *s, int flag)
+static void	starter(t_storage *s, int flag)
 {
 	if (flag == 1)
 	{
@@ -32,7 +32,7 @@ static void starter(t_storage *s, int flag)
 	}
 }
 
-static int get_comment(t_storage *s, char *line)
+static int	get_comment(t_storage *s, char *line)
 {
 	if (ft_strlen(line) <= 1)
 		return (0);
@@ -54,7 +54,7 @@ static int get_comment(t_storage *s, char *line)
 	return (0);
 }
 
-static void get_ants(t_storage *s, char *line)
+static void	get_ants(t_storage *s, char *line)
 {
 	if (!isnumeric(line))
 	{
@@ -74,18 +74,19 @@ static void get_ants(t_storage *s, char *line)
 	}
 }
 
-static void parser(t_storage *s)
+static void	parser(t_storage *s)
 {
-	char *line;
+	char	*line;
 
 	while (get_next_line(s->fd, &line))
 	{
 		if (line[0] == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
-		if (get_comment(s, line));
+		if (get_comment(s, line))
+			continue ;
 		else if (!s->step_1)
 			get_ants(s, line);
 		else if (!s->step_2)
@@ -97,7 +98,6 @@ static void parser(t_storage *s)
 	if (s->is_start == 0 || s->is_end == 0)
 		error("no start or end");
 	print_input_list(s);
-
 }
 
 void		reader(t_storage *s)
@@ -112,8 +112,6 @@ void		reader(t_storage *s)
 		}
 	}
 	else
-		s->fd = 1;
+		s->fd = 0;
 	parser(s);
 }
-
-

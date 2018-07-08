@@ -12,16 +12,16 @@
 
 #include "lemin.h"
 
-static void check_room_coords(t_storage *s, char *name, int x, int y)
+static void		check_room_coords(t_storage *s, char *name, int x, int y)
 {
 	t_room *tmp;
 
 	if (s->rooms_lst == NULL)
-		return;
+		return ;
 	else
 	{
 		tmp = s->rooms_lst;
-		while(tmp != NULL)
+		while (tmp != NULL)
 		{
 			if (tmp->x == x && tmp->y == y)
 				error("wrong room coordinates");
@@ -34,7 +34,7 @@ static void check_room_coords(t_storage *s, char *name, int x, int y)
 	}
 }
 
-int add_room(t_storage *s, char *line)
+int				add_room(t_storage *s, char *line)
 {
 	char **array;
 
@@ -42,10 +42,11 @@ int add_room(t_storage *s, char *line)
 	{
 		get_links(s, line);
 		s->step_2 = 1;
-		return(1);
+		return (1);
 	}
 	array = ft_strsplit(line, ' ');
-	if (arrlen(array) != 3 || !isnumeric(array[1]) || !isnumeric(array[2]) || ft_atoi(array[1]) < 0 ||  ft_atoi(array[2]) < 0)
+	if (arrlen(array) != 3 || !isnumeric(array[1]) || !isnumeric(array[2])
+		|| ft_atoi(array[1]) < 0 || ft_atoi(array[2]) < 0)
 	{
 		ft_putstr("wrong room\n");
 		exit(0);
@@ -56,10 +57,5 @@ int add_room(t_storage *s, char *line)
 	s->nr_end = 0;
 	add_input_lst(s, ft_strdup(line));
 	free_array(array);
-	return(1);
-}
-
-void get_room(t_storage *s, char *line)
-{
-	add_room(s, line);
+	return (1);
 }

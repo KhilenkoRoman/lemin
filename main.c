@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void error(char *error)
+void	error(char *error)
 {
 	ft_putstr("ERROR: ");
 	ft_putstr(error);
@@ -20,7 +20,7 @@ void error(char *error)
 	exit(0);
 }
 
-void init(t_storage *s)
+void	init(t_storage *s)
 {
 	s->fd = -1;
 	s->step_1 = 0;
@@ -35,16 +35,14 @@ void init(t_storage *s)
 	s->ant_start = 0;
 }
 
-int main(int argc, char *argv[])
+int		main(int argc, char *argv[])
 {
 	t_storage	s;
 
 	s.argc = argc;
 	s.argv = argv;
-
 	init(&s);
 	reader(&s);
 	way_finder(&s);
 	printer(&s);
-	// system("leaks lem-in");
 }

@@ -12,15 +12,15 @@
 
 #include "lemin.h"
 
-static void starter(t_storage *s)
+static void		starter(t_storage *s)
 {
 	t_room *tmp;
 	t_room *start;
 
 	if (s->rooms_lst->start == 1)
-		return;
+		return ;
 	tmp = s->rooms_lst;
-	while(tmp != NULL && tmp->next != NULL)
+	while (tmp != NULL && tmp->next != NULL)
 	{
 		if (tmp->next->start == 1)
 		{
@@ -34,7 +34,7 @@ static void starter(t_storage *s)
 	s->rooms_lst->next = tmp;
 }
 
-static void ender(t_storage *s)
+static void		ender(t_storage *s)
 {
 	t_room *tmp;
 	t_room *end;
@@ -46,7 +46,7 @@ static void ender(t_storage *s)
 		s->rooms_lst = tmp->next;
 		tmp = s->rooms_lst;
 	}
-	while(tmp->next != NULL)
+	while (tmp->next != NULL)
 	{
 		if (tmp->next->end == 1)
 		{
@@ -54,26 +54,14 @@ static void ender(t_storage *s)
 			tmp->next = end->next;
 		}
 		if (tmp->next == NULL)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	end->next = NULL;
 	tmp->next = end;
 }
 
-static void unvisit(t_storage *s)
-{
-	t_room	*tmp;
-
-	tmp = s->rooms_lst;
-	while (tmp != NULL)
-	{
-		tmp->visited = 0;
-		tmp = tmp->next;
-	}
-}
-
-static int step(t_room *room, t_storage *s, int count, t_link **way)
+static int		step(t_room *room, t_storage *s, int count, t_link **way)
 {
 	t_link *links;
 
@@ -82,7 +70,8 @@ static int step(t_room *room, t_storage *s, int count, t_link **way)
 		add_link_lst(way, room->name);
 		return (1);
 	}
-	if (room->visited == 1 || count > s->gc || (room_in_way(room->name, s) == 1 && room->start != 1))
+	if (room->visited == 1 || count > s->gc ||
+		(room_in_way(room->name, s) == 1 && room->start != 1))
 		return (0);
 	add_link_lst(way, room->name);
 	links = room->links;
@@ -94,10 +83,10 @@ static int step(t_room *room, t_storage *s, int count, t_link **way)
 		links = links->next;
 	}
 	pop_last_link(way);
-	return(0);
+	return (0);
 }
 
-static void finder(t_storage *s)
+static void		finder(t_storage *s)
 {
 	int		res;
 	t_ways	*cur_way;
@@ -111,18 +100,18 @@ static void finder(t_storage *s)
 		{
 			res = step(s->rooms_lst, s, 1, &cur_way->way);
 			if (res == 1)
-				break;
+				break ;
 			unvisit(s);
 			free(cur_way->way);
 			cur_way->way = NULL;
-			s->gc++;		
+			s->gc++;
 		}
 		if (res == 0)
-			break;
+			break ;
 	}
 }
 
-void way_finder(t_storage *s)
+void			way_finder(t_storage *s)
 {
 	starter(s);
 	ender(s);
