@@ -12,6 +12,16 @@
 
 #include "lemin.h"
 
+void			free_array(char **array)
+{
+	int i;
+
+	i = 0;
+	while (array[i] != 0)
+		free(array[i++]);
+	free(array);
+}
+
 static void		check_room_coords(t_storage *s, char *name, int x, int y)
 {
 	t_room *tmp;

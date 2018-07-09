@@ -77,7 +77,7 @@ typedef struct		s_storage
 void				reader(t_storage *s);
 void				add_input_lst(t_storage *s, char *line);
 void				print_input_list(t_storage *s);
-void				get_room(t_storage *s, char *line);
+int					add_room(t_storage *s, char *line);
 int					arrlen(char **array);
 int					isnumeric(char *str);
 void				add_room_lst(t_storage *s, char *name, int x, int y);

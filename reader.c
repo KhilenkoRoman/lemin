@@ -80,17 +80,17 @@ static void	parser(t_storage *s)
 
 	while (get_next_line(s->fd, &line))
 	{
-		if (line[0] == 0)
+		if (line == NULL || line[0] == 0)
 		{
 			free(line);
 			break ;
 		}
 		if (get_comment(s, line))
-			continue ;
+			;
 		else if (!s->step_1)
 			get_ants(s, line);
 		else if (!s->step_2)
-			get_room(s, line);
+			add_room(s, line);
 		else if (!s->step_3)
 			get_links(s, line);
 		free(line);
@@ -102,16 +102,6 @@ static void	parser(t_storage *s)
 
 void		reader(t_storage *s)
 {
-	if (s->argc >= 2)
-	{
-		s->fd = open(s->argv[1], O_RDONLY);
-		if (s->fd == -1)
-		{
-			ft_putstr("wrong input\n");
-			exit(0);
-		}
-	}
-	else
-		s->fd = 0;
+	s->fd = 0;
 	parser(s);
 }

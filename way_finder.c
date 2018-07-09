@@ -106,7 +106,7 @@ static void		finder(t_storage *s)
 			cur_way->way = NULL;
 			s->gc++;
 		}
-		if (res == 0)
+		if (res == 0 || link_count(cur_way->way) == 2)
 			break ;
 	}
 }

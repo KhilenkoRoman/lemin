@@ -38,16 +38,6 @@ int		isnumeric(char *str)
 	return (1);
 }
 
-void	free_array(char **array)
-{
-	int i;
-
-	i = 0;
-	while (array[i] != 0)
-		free(array[i++]);
-	free(array);
-}
-
 void	room_count(t_storage *s)
 {
 	t_room	*tmp;
